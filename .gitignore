@@ -1,0 +1,42 @@
+# =========================
+# Unreal Engine
+# =========================
+
+# Build results
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# Plugin-specific generated files
+Plugins/**/Binaries/
+Plugins/**/Intermediate/
+
+# Visual Studio / IDE
+.vs/
+*.sln
+*.VC.db
+*.VC.opendb
+*.suo
+*.user
+
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+
+# =========================
+# Unreal Engine Temporary
+# =========================
+
+# Shader caches
+*.ushadercache
+*.usf
+
+# Crash dumps
+crashinfo-*

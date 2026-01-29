@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "PluginArchitect",
+	"Description": "",
+	"Category": "Other",
+	"CreatedBy": "Jaiminsinh Dodiya",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "PluginArchitect",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
