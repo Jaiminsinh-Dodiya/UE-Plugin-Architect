@@ -79,17 +79,11 @@ struct PluginModuleDescriptor
     * @return true if valid, false otherwise
     * 
     */
-   bool isValid(FString& OutErrorMessage = nullptr) const
+   bool isValid(FString* OutErrorMessage = nullptr) const
    {
        if (Name.IsEmpty())
        {
            * OutErrorMessage = TEXT("Module name is empty");
-           return false;
-       }
-
-       if(!IsValidEnumValue(Type))
-       {
-           * OutErrorMessage = TEXT("Module type is invalid");
            return false;
        }
 
