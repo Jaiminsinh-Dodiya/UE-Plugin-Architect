@@ -4,8 +4,14 @@
 class FPluginArchitectRuntimeModule : public IModuleInterface
 {
 public:
-	virtual void StartupModule() override {}
-	virtual void ShutdownModule() override {}
+    virtual void StartupModule() override
+    {
+        // EMPTY
+    }
+
+    virtual void ShutdownModule() override
+    {
+    }
 };
 
 IMPLEMENT_MODULE(FPluginArchitectRuntimeModule, PluginArchitectRuntime)
