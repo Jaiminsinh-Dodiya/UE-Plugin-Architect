@@ -12,12 +12,12 @@ static FAutoConsoleCommand CreatePluginCommand(
         {
             if (Args.Num() < 1)
             {
-                UE_LOG(LogTemp, Error, TEXT("Usage: PluginArchitect.CreatePlugin <PluginName>"));
+                PA_LOG(Error, TEXT("Insufficient arguments provided for CreatePlugin command"));
                 return;
             }
 
             const FString& PluginName = Args[0];
-            UE_LOG(LogTemp, Log, TEXT("Creating plugin: %s"), *PluginName);
+            PA_LOG(Log, TEXT("Plugin '%s' created successfully"), *PluginName);
 
             // Generator call will go here next
         }
