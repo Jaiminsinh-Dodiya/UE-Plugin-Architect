@@ -1,24 +1,39 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #include "PluginArchitect.h"
 #include "PluginArchitectMacros.h"
+#include "HAL/IConsoleManager.h"
 
 #define LOCTEXT_NAMESPACE "FPluginArchitectModule"
 
+static FAutoConsoleCommand CreatePluginCommand(
+    TEXT("PluginArchitect.CreatePlugin"),
+    TEXT("Creates a runtime-only Unreal plugin. Usage: PluginArchitect.CreatePlugin <PluginName>"),
+    FConsoleCommandWithArgsDelegate::CreateStatic(
+        [](const TArray<FString>& Args)
+        {
+            if (Args.Num() < 1)
+            {
+                UE_LOG(LogTemp, Error, TEXT("Usage: PluginArchitect.CreatePlugin <PluginName>"));
+                return;
+            }
+
+            const FString& PluginName = Args[0];
+            UE_LOG(LogTemp, Log, TEXT("Creating plugin: %s"), *PluginName);
+
+            // Generator call will go here next
+        }
+    )
+);
+
 void FPluginArchitectModule::StartupModule()
 {
-	PA_LOG(Log, TEXT("PluginArchitect module has started."));
-	PA_LOG(Warning, TEXT("This is a warning test"));
-	PA_LOG(Error, TEXT("This is an error test (not a real error!)"));
-	PA_LOG(Display, TEXT("This is a display message"));
-	PA_LOG(Verbose, TEXT("This is verbose - you might not see this"));
+    PA_LOG(Log, TEXT("PluginArchitect module started"));
 }
 
 void FPluginArchitectModule::ShutdownModule()
 {
-	PA_LOG(Log, TEXT("PluginArchitect module is shutting down."));
+    PA_LOG(Log, TEXT("PluginArchitect module shutting down"));
 }
 
 #undef LOCTEXT_NAMESPACE
-	
+
 IMPLEMENT_MODULE(FPluginArchitectModule, PluginArchitect)
