@@ -16,13 +16,13 @@
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "PluginArchitect",
-			"Type": "Editor",
+			"Name": "PluginArchitectRuntime",
+			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		},
 		{
-			"Name": "PluginArchitectRuntime",
-			"Type": "Runtime",
+			"Name": "PluginArchitect",
+			"Type": "Editor",
 			"LoadingPhase": "Default"
 		}
 	]
