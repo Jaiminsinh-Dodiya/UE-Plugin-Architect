@@ -18,7 +18,7 @@
  * - Validator (for checking correctness)
  * - Serializer (for writing .uplugin JSON)
  */
-struct FPluginDescriptor
+struct FPluginArchitectDescriptor
 {
 public:
 	/** Plugin version (e.g., 1) */
@@ -78,7 +78,7 @@ public:
 	/** Default constructor
 	 * Initializes with default values
 	 */
-	FPluginDescriptor()
+	FPluginArchitectDescriptor()
 		: FileVersion(3)
 		, Version(TEXT("1.0"))
 		, FriendlyName(TEXT("My Plugin"))
@@ -103,8 +103,8 @@ public:
 	 * @param InName - Plugin name (used for FriendlyName)
 	 * @param InDescription - Plugin description
 	 */
-	FPluginDescriptor(const FString& InName, const FString& InDescription)
-		: FPluginDescriptor()
+	FPluginArchitectDescriptor(const FString& InName, const FString& InDescription)
+		: FPluginArchitectDescriptor()
 	{
 		FriendlyName = InName;
 		Description = InDescription;
