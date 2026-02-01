@@ -18,8 +18,7 @@
  * - Validator (for checking correctness)
  * - Serializer (for writing .uplugin JSON)
  */
-
-struct PluginDescriptor
+struct FPluginDescriptor
 {
 public:
 	/** Plugin version (e.g., 1) */
@@ -76,31 +75,29 @@ public:
 	/** Plugins this plugin depends on */
 	TArray<FString> Plugins;
 
-    public:
-    /** Default constructor
-     * Initializes with default values
-     */
-    PluginDescriptor()
-        : FileVersion(3)
-        , Version(TEXT("1.0"))
-        , FriendlyName(TEXT("My Plugin"))
-        , Description(TEXT("A description of my plugin"))
-        , Category(TEXT("Other"))
-        , CreatedBy(TEXT("Author Name"))
-        , CreatedByURL(TEXT(""))
-        , DocsURL(TEXT(""))
-        , MarketplaceURL(TEXT(""))
-        , SupportURL(TEXT(""))
-        , EngineVersion(TEXT("5.7.2"))
-        , bCanContainContent(false)
-        , bIsBetaVersion(false)
-        , bIsEnabledByDefault(true)
-        , bIsExperimentalVersion(false)
-        , bIsHidden(false)
-        {
-        }
+	/** Default constructor
+	 * Initializes with default values
+	 */
+	FPluginDescriptor()
+		: FileVersion(3)
+		, Version(TEXT("1.0"))
+		, FriendlyName(TEXT("My Plugin"))
+		, Description(TEXT("A description of my plugin"))
+		, Category(TEXT("Other"))
+		, CreatedBy(TEXT("Author Name"))
+		, CreatedByURL(TEXT(""))
+		, DocsURL(TEXT(""))
+		, MarketplaceURL(TEXT(""))
+		, SupportURL(TEXT(""))
+		, EngineVersion(TEXT("5.7.2"))
+		, bCanContainContent(false)
+		, bIsBetaVersion(false)
+		, bIsEnabledByDefault(true)
+		, bIsExperimentalVersion(false)
+		, bIsHidden(false)
+	{
+	}
 
-        
 	/**
 	 * Convenience constructor for quick plugin creation
 	 * @param InName - Plugin name (used for FriendlyName)
@@ -113,8 +110,7 @@ public:
 		Description = InDescription;
 	}
 
-    // Validation
-    	/**
+	/**
 	 * Validates this plugin descriptor
 	 * @param OutErrors - Array to collect all error messages
 	 * @return true if valid, false otherwise
@@ -251,4 +247,4 @@ public:
 			Modules.Num()
 		);
 	}
-}
+};

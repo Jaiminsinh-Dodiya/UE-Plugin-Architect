@@ -26,6 +26,7 @@ public class PluginArchitect : ModuleRules
 			new string[]
 			{
 				"Core",
+				"PluginArchitectRuntime"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
