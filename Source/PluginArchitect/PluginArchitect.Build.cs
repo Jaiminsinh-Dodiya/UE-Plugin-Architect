@@ -38,6 +38,7 @@ public class PluginArchitect : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+				"PluginArchitectRuntime"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
