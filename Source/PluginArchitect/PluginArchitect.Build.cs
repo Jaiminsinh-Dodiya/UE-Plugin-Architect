@@ -39,6 +39,7 @@ public class PluginArchitect : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+				"UnrealEd",
 				"PluginArchitectRuntime"
 				// ... add private dependencies that you statically link with here ...	
 			}
