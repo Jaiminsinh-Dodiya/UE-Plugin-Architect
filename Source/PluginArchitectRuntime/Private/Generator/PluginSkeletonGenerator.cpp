@@ -13,6 +13,9 @@
 // Generate Runtime .Build.cs and module code
 #include "Generator/PluginRuntimeModuleGenerator.h"
 
+// Generates Build.cs file for runtime module
+#include "Generator/PluginRuntimeBuildCsGenerator.h"
+
 
 bool FPluginSkeletonGenerator::Generate(
 	const FPluginArchitectDescriptor &Descriptor,
@@ -100,6 +103,16 @@ bool FPluginSkeletonGenerator::Generate(
 			OutError))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Failed to generate runtime module: %s"), *OutError);
+		return false;
+	}
+
+	// ---- Generate runtime Build.cs ----
+	if (!FPluginRuntimeBuildCsGenerator::GenerateBuildCsContent(
+			Descriptor,
+			PluginRootDir,
+			OutError))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to generate runtime Build.cs: %s"), *OutError);
 		return false;
 	}
 
