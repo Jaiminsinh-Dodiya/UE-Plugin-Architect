@@ -10,6 +10,9 @@
 #include "HAL/FileManager.h"
 #include "Misc/FileHelper.h"
 
+// Generate Runtime .Build.cs and module code
+#include "Generator/PluginRuntimeModuleGenerator.h"
+
 
 bool FPluginSkeletonGenerator::Generate(
 	const FPluginArchitectDescriptor &Descriptor,
@@ -89,6 +92,16 @@ bool FPluginSkeletonGenerator::Generate(
 		return false;
 	}
 	UE_LOG(LogTemp, Log, TEXT("Successfully wrote .uplugin file: %s"), *UPluginFilePath);
-	
+
+	// ---- Generate runtime module ----
+	if (!FPluginRuntimeModuleGenerator::P_M_Generate(
+			Descriptor,
+			PluginRootDir,
+			OutError))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to generate runtime module: %s"), *OutError);
+		return false;
+	}
+
 	return true;
 }
