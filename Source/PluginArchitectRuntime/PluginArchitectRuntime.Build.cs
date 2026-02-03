@@ -27,7 +27,9 @@ public class PluginArchitectRuntime : ModuleRules
 			{
 				"Core",
 				"CoreUObject",
-				"Engine"
+				"Engine",
+				"Json",
+				"JsonUtilities"
 			}
 		);
 

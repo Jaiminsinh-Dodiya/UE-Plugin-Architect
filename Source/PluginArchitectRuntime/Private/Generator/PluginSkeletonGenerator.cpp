@@ -5,6 +5,12 @@
 #include "Misc/Paths.h"
 #include "Logging/LogMacros.h"
 
+//Serialization
+#include "Serialization/PluginUPluginSerializer.h"
+#include "HAL/FileManager.h"
+#include "Misc/FileHelper.h"
+
+
 bool FPluginSkeletonGenerator::Generate(
 	const FPluginArchitectDescriptor &Descriptor,
 	const FString &TargetPluginsDir,
@@ -61,5 +67,28 @@ bool FPluginSkeletonGenerator::Generate(
 		return false;
 	}
 
+	// ---- Serialize .uplugin file ----
+	FString UPluginJson;
+	if (!FPluginUPluginSerializer::Serialize(
+			Descriptor,
+			UPluginJson,
+			OutError))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to serialize .uplugin: %s"), *OutError);
+		return false;
+	}
+
+	// ---- Write .uplugin file ----
+	const FString UPluginFilePath =
+		FPaths::Combine(PluginRootDir, Descriptor.FriendlyName + TEXT(".uplugin"));
+
+	if (!FFileHelper::SaveStringToFile(UPluginJson, *UPluginFilePath))
+	{
+		OutError = FString::Printf(TEXT("Failed to write .uplugin file: %s"), *UPluginFilePath);
+		UE_LOG(LogTemp, Error, TEXT("%s"), *OutError);
+		return false;
+	}
+	UE_LOG(LogTemp, Log, TEXT("Successfully wrote .uplugin file: %s"), *UPluginFilePath);
+	
 	return true;
 }
