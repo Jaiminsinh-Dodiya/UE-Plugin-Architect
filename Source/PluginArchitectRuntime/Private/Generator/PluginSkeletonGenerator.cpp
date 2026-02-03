@@ -1,14 +1,14 @@
 #include "Generator/PluginSkeletonGenerator.h"
 
-#include "Descriptor/PluginArchitectDescriptor.h"      // YOUR struct
+#include "Descriptor/PluginArchitectDescriptor.h"
+#include "Generator/PluginLayoutBuilder.h"
 #include "Misc/Paths.h"
 #include "Logging/LogMacros.h"
 
 bool FPluginSkeletonGenerator::Generate(
-	const FPluginArchitectDescriptor& Descriptor,
-	const FString& TargetPluginsDir,
-	FString& OutError
-)
+	const FPluginArchitectDescriptor &Descriptor,
+	const FString &TargetPluginsDir,
+	FString &OutError)
 {
 	UE_LOG(LogTemp, Log, TEXT("[PluginSkeletonGenerator] Generate called"));
 
@@ -47,8 +47,19 @@ bool FPluginSkeletonGenerator::Generate(
 	UE_LOG(LogTemp, Log, TEXT("Plugin Root Path : %s"), *PluginRootDir);
 	UE_LOG(LogTemp, Log, TEXT("Module Count     : %d"), Descriptor.Modules.Num());
 
-	// ---- For v0.1: NO filesystem writes ----
-	// This is only validation & planning
+	// ---- Create plugin layout ----
+
+	const FString RuntimeModuleName =
+		Descriptor.FriendlyName + TEXT("Runtime");
+
+	if (!FPluginLayoutBuilder::CreateLayout(
+			PluginRootDir,
+			RuntimeModuleName,
+			OutError))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Layout creation failed: %s"), *OutError);
+		return false;
+	}
 
 	return true;
 }
