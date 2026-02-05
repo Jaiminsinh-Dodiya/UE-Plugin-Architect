@@ -112,3 +112,98 @@ Advanced Features
  Validation UI
 
  Marketplace-ready packaging
+
+
+
+ PluginArchitect — TODO
+Current Status
+
+✔ Console command creates plugin
+✔ Folder layout generated
+✔ .uplugin generated
+✔ Runtime module (.h / .cpp) generated
+✔ Runtime .Build.cs generated
+⏳ Needs real compile validation inside fresh editor session
+
+Immediate Next Step (NEXT SESSION)
+
+Close editor
+
+Delete project Binaries/Intermediate/Saved
+
+Reopen project
+
+Let Unreal rebuild modules
+
+Verify plugin loads without errors
+
+Phase 6 — Add Module To Existing Plugin
+
+Goal:
+PluginArchitect.CreateModule MyPlugin MyPluginEditor
+
+Tasks:
+
+Detect existing plugin directory
+
+Read .uplugin
+
+Append new module entry
+
+Generate module folder
+
+Generate .Build.cs
+
+Generate .h/.cpp
+
+Preserve existing modules
+
+Phase 7 — Descriptor Improvements
+
+Separate PluginDescriptor vs ModuleDescriptor usage
+
+Module dependency configuration
+
+Runtime vs Editor module types
+
+Validation errors in console
+
+Phase 8 — UX Improvements
+
+Better console help text
+
+Colored success / error output
+
+PluginArchitect.Help
+
+Overwrite / force flags
+
+Phase 9 — Editor Integration
+
+Editor window UI
+
+Form-based plugin creation
+
+Module creation panel
+
+Live validation
+
+Phase 10 — Advanced Features
+
+Dependency presets (Runtime, Editor, Slate, Networking)
+
+Auto include templates
+
+Optional content folder
+
+Plugin templates (Game Feature, Runtime Only, Editor Tool)
+
+Phase 11 — Polish
+
+Logging categories
+
+Error codes
+
+Documentation
+
+Example projects
