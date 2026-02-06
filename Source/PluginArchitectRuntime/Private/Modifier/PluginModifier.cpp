@@ -2,12 +2,13 @@
 
 #include "Serialization/FPluginReader.h"
 #include "Serialization/FPluginParser.h"
-#include "Generator/PluginGenerator.h"
+#include "Serialization/PluginUPluginSerializer.h"
+#include "Generator/PluginModuleGenerator.h"
 
 #include "Misc/Paths.h"
 #include "Misc/FileHelper.h"
 
-bool FPluginModifier::AddModule(
+bool FPluginModifier::GenerateModule(
     const FString& PluginName,
     const FString& ModuleName,
     EPluginModuleType Type,
@@ -20,6 +21,13 @@ bool FPluginModifier::AddModule(
     const FString UPluginPath =
         FPaths::Combine(PluginDir, PluginName + TEXT(".uplugin"));
 
+    // Check plugin exists
+    if (!FPaths::FileExists(UPluginPath))
+    {
+        OutError = TEXT("Plugin not found: ") + UPluginPath;
+        return false;
+    }
+
     // 2) Read json
     TSharedPtr<FJsonObject> Json;
     if (!FPluginReader::Load(UPluginPath, Json, OutError))
@@ -30,12 +38,23 @@ bool FPluginModifier::AddModule(
     if (!FPluginParser::ToDescriptor(Json, Descriptor, OutError))
         return false;
 
-    // 4) Add module
+    // 4) Add module to descriptor
     Descriptor.AddModule(ModuleName, Type);
 
-    // 5) Regenerate plugin
-    if (!FPluginGenerator::CreateModule(Descriptor, FPaths::ProjectPluginsDir(), OutError))
+    // 5) Regenerate ONLY module files
+    if (!FPluginModuleGenerator::GenerateModule(Descriptor, PluginDir, OutError))
         return false;
+
+    // 6) Rewrite .uplugin
+    FString NewJson;
+    if (!FPluginUPluginSerializer::Serialize(Descriptor, NewJson, OutError))
+        return false;
+
+    if (!FFileHelper::SaveStringToFile(NewJson, *UPluginPath))
+    {
+        OutError = TEXT("Failed to update .uplugin");
+        return false;
+    }
 
     return true;
 }

@@ -139,7 +139,7 @@ static FAutoConsoleCommand CreateModuleCommand(
 
             FString Error;
 
-            if (!FPluginModifier::AddModule(PluginName, ModuleName, ModuleType, Error))
+            if (!FPluginModifier::GenerateModule(PluginName, ModuleName, ModuleType, Error))
             {
                 PA_LOG(Error, TEXT("%s"), *Error);
             }
