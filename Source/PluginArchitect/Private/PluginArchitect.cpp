@@ -2,7 +2,7 @@
 #include "PluginArchitectMacros.h"
 #include "HAL/IConsoleManager.h"
 #include "Descriptor/PluginArchitectDescriptor.h"
-#include "Generator/PluginSkeletonGenerator.h"
+#include "Generator/PluginGenerator.h"
 #include "Misc/Paths.h"
 
 #define LOCTEXT_NAMESPACE "FPluginArchitectModule"
@@ -41,7 +41,7 @@ static FAutoConsoleCommand CreatePluginCommand(
             FString Error;
             const FString PluginsDir = FPaths::ProjectPluginsDir();
 
-            if (!FPluginSkeletonGenerator::Generate(Descriptor, PluginsDir, Error))
+            if (!FPluginGenerator::Generate(Descriptor, PluginsDir, Error))
             {
                 PA_LOG(Error, TEXT("Plugin generation failed: %s"), *Error);
             }

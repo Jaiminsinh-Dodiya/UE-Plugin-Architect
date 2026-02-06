@@ -9,7 +9,7 @@ struct FPluginArchitectDescriptor;
  * Runtime-only plugin skeleton generator.
  * Uses FPluginArchitectDescriptor as the single source of truth.
  */
-class PLUGINARCHITECTRUNTIME_API FPluginSkeletonGenerator
+class PLUGINARCHITECTRUNTIME_API FPluginGenerator
 {
 public:
 	/**

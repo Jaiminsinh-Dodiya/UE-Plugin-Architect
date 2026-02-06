@@ -6,7 +6,7 @@
 /**
  * Generates runtime module code for a plugin based on its descriptor.
  */
-class FPluginRuntimeModuleGenerator
+class FPluginModuleGenerator
 {
 public:
     /**
@@ -17,9 +17,13 @@ public:
      * @param OutError Error message on failure.
      * @return true if generation succeeded.
      */
-    static bool P_M_Generate(
-        const FPluginArchitectDescriptor& Descriptor,
-        const FString& PluginRootDir,
-        FString& OutError
-    );
+    static bool GenerateModule(
+        const FPluginArchitectDescriptor &Descriptor,
+        const FString &PluginRootDir,
+        FString &OutError);
+
+    static bool GenerateBuildCsContent(
+        const FPluginArchitectDescriptor &PluginDescriptor,
+        const FString &OutBuildCsContent,
+        FString &OutError);
 };

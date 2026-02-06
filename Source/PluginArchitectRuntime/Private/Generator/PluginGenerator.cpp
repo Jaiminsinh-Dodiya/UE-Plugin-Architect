@@ -1,4 +1,4 @@
-#include "Generator/PluginSkeletonGenerator.h"
+#include "Generator/PluginGenerator.h"
 
 #include "Descriptor/PluginArchitectDescriptor.h"
 #include "Generator/PluginLayoutBuilder.h"
@@ -11,13 +11,10 @@
 #include "Misc/FileHelper.h"
 
 // Generate Runtime .Build.cs and module code
-#include "Generator/PluginRuntimeModuleGenerator.h"
-
-// Generates Build.cs file for runtime module
-#include "Generator/PluginRuntimeBuildCsGenerator.h"
+#include "Generator/PluginModuleGenerator.h"
 
 
-bool FPluginSkeletonGenerator::Generate(
+bool FPluginGenerator::Generate(
 	const FPluginArchitectDescriptor &Descriptor,
 	const FString &TargetPluginsDir,
 	FString &OutError)
@@ -97,7 +94,7 @@ bool FPluginSkeletonGenerator::Generate(
 	UE_LOG(LogTemp, Log, TEXT("Successfully wrote .uplugin file: %s"), *UPluginFilePath);
 
 	// ---- Generate runtime module ----
-	if (!FPluginRuntimeModuleGenerator::P_M_Generate(
+	if (!FPluginModuleGenerator::GenerateModule(
 			Descriptor,
 			PluginRootDir,
 			OutError))
@@ -107,7 +104,7 @@ bool FPluginSkeletonGenerator::Generate(
 	}
 
 	// ---- Generate runtime Build.cs ----
-	if (!FPluginRuntimeBuildCsGenerator::GenerateBuildCsContent(
+	if (!FPluginModuleGenerator::GenerateBuildCsContent(
 			Descriptor,
 			PluginRootDir,
 			OutError))
