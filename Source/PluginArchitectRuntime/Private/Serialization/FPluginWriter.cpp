@@ -1,4 +1,4 @@
-#include "Serialization/UPluginWriter.h"
+#include "Serialization/FPluginWriter.h"
 
 #include "Serialization/JsonSerializer.h"
 #include "Serialization/JsonWriter.h"

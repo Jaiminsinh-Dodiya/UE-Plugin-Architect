@@ -1,4 +1,4 @@
-#include "Serialization/UPluginReader.h"
+#include "Serialization/FPluginReader.h"
 
 #include "Misc/FileHelper.h"
 #include "Serialization/JsonReader.h"
