@@ -26,7 +26,7 @@ public:
 		const FString& TargetPluginsDir,
 		FString& OutError
 	);
-	static bool AddModule(
+	static bool CreateModule(
 		const FPluginArchitectDescriptor& Descriptor,
 		const FString& TargetPluginsDir,
 		FString& OutError

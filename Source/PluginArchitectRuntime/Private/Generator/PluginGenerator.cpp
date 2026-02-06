@@ -116,11 +116,11 @@ bool FPluginGenerator::GeneratePlugin(
 	return true;
 }
 
-bool FPluginGenerator::AddModule(
+bool FPluginGenerator::CreateModule(
 	const FPluginArchitectDescriptor &Descriptor,
 	const FString &TargetPluginsDir,
 	FString &OutError)
 {
-	UE_LOG(LogTemp, Log, TEXT("[PluginGenerator.cpp] AddModule called"));
+	UE_LOG(LogTemp, Log, TEXT("[PluginGenerator.cpp] CreateModule called"));
 	return true;
 }

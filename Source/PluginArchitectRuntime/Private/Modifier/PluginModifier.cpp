@@ -34,7 +34,7 @@ bool FPluginModifier::AddModule(
     Descriptor.AddModule(ModuleName, Type);
 
     // 5) Regenerate plugin
-    if (!FPluginGenerator::AddModule(Descriptor, FPaths::ProjectPluginsDir(), OutError))
+    if (!FPluginGenerator::CreateModule(Descriptor, FPaths::ProjectPluginsDir(), OutError))
         return false;
 
     return true;
