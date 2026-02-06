@@ -14,12 +14,12 @@
 #include "Generator/PluginModuleGenerator.h"
 
 
-bool FPluginGenerator::Generate(
+bool FPluginGenerator::GeneratePlugin(
 	const FPluginArchitectDescriptor &Descriptor,
 	const FString &TargetPluginsDir,
 	FString &OutError)
 {
-	UE_LOG(LogTemp, Log, TEXT("[PluginSkeletonGenerator] Generate called"));
+	UE_LOG(LogTemp, Log, TEXT("[PluginGenerator.cpp] GeneratePlugin called"));
 
 	// ---- Validate plugin descriptor ----
 
@@ -113,5 +113,14 @@ bool FPluginGenerator::Generate(
 		return false;
 	}
 
+	return true;
+}
+
+bool FPluginGenerator::AddModule(
+	const FPluginArchitectDescriptor &Descriptor,
+	const FString &TargetPluginsDir,
+	FString &OutError)
+{
+	UE_LOG(LogTemp, Log, TEXT("[PluginGenerator.cpp] AddModule called"));
 	return true;
 }

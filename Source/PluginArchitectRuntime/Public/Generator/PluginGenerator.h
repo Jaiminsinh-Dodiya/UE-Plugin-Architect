@@ -21,7 +21,12 @@ public:
 	 *
 	 * @return true if generator can continue, false otherwise
 	 */
-	static bool Generate(
+	static bool GeneratePlugin(
+		const FPluginArchitectDescriptor& Descriptor,
+		const FString& TargetPluginsDir,
+		FString& OutError
+	);
+	static bool AddModule(
 		const FPluginArchitectDescriptor& Descriptor,
 		const FString& TargetPluginsDir,
 		FString& OutError

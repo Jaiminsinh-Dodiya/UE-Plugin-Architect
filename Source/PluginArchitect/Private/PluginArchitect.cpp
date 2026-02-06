@@ -3,15 +3,45 @@
 #include "HAL/IConsoleManager.h"
 #include "Descriptor/PluginArchitectDescriptor.h"
 #include "Generator/PluginGenerator.h"
+#include "Modifier/PluginModifier.h"
 #include "Misc/Paths.h"
 
 #define LOCTEXT_NAMESPACE "FPluginArchitectModule"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Helpers
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool StringToModuleType(const FString& InType, EPluginModuleType& OutType)
+{
+    if (InType.Equals(TEXT("Runtime"), ESearchCase::IgnoreCase))
+    {
+        OutType = EPluginModuleType::Runtime;
+        return true;
+    }
+    if (InType.Equals(TEXT("Editor"), ESearchCase::IgnoreCase))
+    {
+        OutType = EPluginModuleType::Editor;
+        return true;
+    }
+    if (InType.Equals(TEXT("Developer"), ESearchCase::IgnoreCase))
+    {
+        OutType = EPluginModuleType::Developer;
+        return true;
+    }
+
+    return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Create Plugin
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static FAutoConsoleCommand CreatePluginCommand(
     TEXT("PluginArchitect.CreatePlugin"),
     TEXT("Creates a runtime-only Unreal plugin. Usage: PluginArchitect.CreatePlugin <PluginName>"),
     FConsoleCommandWithArgsDelegate::CreateStatic(
-        [](const TArray<FString> &Args)
+        [](const TArray<FString>& Args)
         {
             if (Args.Num() < 1)
             {
@@ -19,41 +49,38 @@ static FAutoConsoleCommand CreatePluginCommand(
                 return;
             }
 
-            const FString &PluginName = Args[0];
-
-            // --------------------
-            // Build descriptor (TEMP values for v0.1)
-            // --------------------
+            const FString& PluginName = Args[0];
 
             FPluginArchitectDescriptor Descriptor;
             Descriptor.FriendlyName = PluginName;
             Descriptor.Version = TEXT("1.0");
             Descriptor.FileVersion = 3;
 
-            // One runtime module for now
+            // Default Runtime module
             Descriptor.AddModule(
                 PluginName + TEXT("Runtime"),
                 EPluginModuleType::Runtime);
 
-            // --------------------
-            // Call runtime generator
-            // --------------------
             FString Error;
             const FString PluginsDir = FPaths::ProjectPluginsDir();
 
-            if (!FPluginGenerator::Generate(Descriptor, PluginsDir, Error))
+            if (!FPluginGenerator::GeneratePlugin(Descriptor, PluginsDir, Error))
             {
                 PA_LOG(Error, TEXT("Plugin generation failed: %s"), *Error);
             }
             else
             {
-                PA_LOG(Log, TEXT("Plugin generation validated successfully for '%s'"), *PluginName);
+                PA_LOG(Log, TEXT("Plugin '%s' created successfully"), *PluginName);
             }
         }));
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Add Module
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static FAutoConsoleCommand CreateModuleCommand(
     TEXT("PluginArchitect.CreateModule"),
-    TEXT("Adds a module to an existing plugin. Usage: PluginArchitect.CreateModule <PluginName> <ModuleName> [Runtime|Editor]"),
+    TEXT("Adds a module to an existing plugin. Usage: PluginArchitect.CreateModule <PluginName> <ModuleName> [Runtime|Editor|Developer]"),
     FConsoleCommandWithArgsDelegate::CreateStatic(
         [](const TArray<FString>& Args)
         {
@@ -65,16 +92,33 @@ static FAutoConsoleCommand CreateModuleCommand(
 
             const FString& PluginName = Args[0];
             const FString& ModuleName = Args[1];
-            const FString ModuleType = Args.Num() >= 3 ? Args[2] : TEXT("Runtime");
+            const FString TypeString = Args.Num() >= 3 ? Args[2] : TEXT("Runtime");
+
+            EPluginModuleType ModuleType;
+            if (!StringToModuleType(TypeString, ModuleType))
+            {
+                PA_LOG(Error, TEXT("Invalid module type '%s'. Use Runtime, Editor or Developer"), *TypeString);
+                return;
+            }
 
             PA_LOG(Log, TEXT("CreateModule requested"));
             PA_LOG(Log, TEXT("Plugin : %s"), *PluginName);
             PA_LOG(Log, TEXT("Module : %s"), *ModuleName);
-            PA_LOG(Log, TEXT("Type   : %s"), *ModuleType);
+            PA_LOG(Log, TEXT("Type   : %s"), *TypeString);
 
-            // Next step: resolve plugin path (we implement soon)
+            FString Error;
+
+            if (!FPluginModifier::AddModule(PluginName, ModuleName, ModuleType, Error))
+            {
+                PA_LOG(Error, TEXT("%s"), *Error);
+            }
+            else
+            {
+                PA_LOG(Log, TEXT("Module '%s' added to plugin '%s'"), *ModuleName, *PluginName);
+            }
         }));
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void FPluginArchitectModule::StartupModule()
 {
